@@ -44,26 +44,17 @@ jobs:
            uname -r
            ls -l kindling-falcolib-probe/
            
-  buildprobes:
-    needs: [builddrivers]
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
       - name: copy drivers to probe
         run: |
+          ls -l ./
           tar -cvzf kindling-falcolib-probe.tar.gz kindling-falcolib-probe/
           cp kindling-falcolib-probe.tar.gz probe/deploy/
       - name: test
         run: |
-          ls -l ./
           cd probe/
           sh run_docker_bpf_daemon.sh
           sed -i ".bak"  's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
           bazel build -s --config=clang src/probe:push_image_localdriver
           ./bazel-bin/src/probe/push_image_localdriver 
-
