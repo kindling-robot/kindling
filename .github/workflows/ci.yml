@@ -35,7 +35,7 @@ jobs:
         run: sudo apt-get -y install linux-headers-$(uname -r)
         
       - name: trigger compiling drivers
-        run: docker run -it -v /usr:/host/usr -v /lib/modules:/host/lib/modules -v $PWD:/source kindlingproject/kernel-builder:latest
+        run: docker run -v /usr:/host/usr -v /lib/modules:/host/lib/modules -v $PWD:/source kindlingproject/kernel-builder:latest
       
 
       # Runs a single command using the runners shell
