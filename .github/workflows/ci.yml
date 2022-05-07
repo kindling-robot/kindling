@@ -33,9 +33,15 @@ jobs:
         
       - name: install kernel headers
         run: sudo apt-get -y install linux-headers-$(uname -r)
+        
+      - name: trigger compiling drivers
+        run: docker run -it -v /usr:/host/usr -v /lib/modules:/host/lib/modules -v $PWD:/source kindlingproject/kernel-builder:latest
+      
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
            pwd
            uname -r
+           ll kindling-falcolib-probe/
+
