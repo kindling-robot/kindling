@@ -65,8 +65,7 @@ jobs:
           cp kindling-falcolib-probe.tar.gz subdir/probe/deploy/
           ls -l subdir/probe/deploy
           cd subdir/probe/
-          echo ${{ github.event.release.name }}
-          sed -i "" -e 's/tag = "latest"/tag = ${{env.version}}/g' src/probe/BUILD.bazel
+          sed -i '' -e 's/tag = "latest"/tag = ${{env.version}}/g' src/probe/BUILD.bazel
           
       - uses: addnab/docker-run-action@v3
         with:
