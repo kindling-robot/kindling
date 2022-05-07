@@ -64,7 +64,7 @@ jobs:
       - uses: addnab/docker-run-action@v3
         with:
           image: kindlingproject/kindling-compiler
-          options: -v /var/run/docker.sock:/var/run/docker.sock  -v ../:/kindling -w /kindling/probe
+          options: -v /var/run/docker.sock:/var/run/docker.sock  -v /home/runner/work/kindling/kindling/subdir:/kindling -w /kindling/probe
           run: |
             pwd
             ls -l
