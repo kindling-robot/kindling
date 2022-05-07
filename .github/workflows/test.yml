@@ -19,19 +19,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: Kindling-project/agent-libs.git
           ref: kindling-dev
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ls -l
+        run: |
+          ls -l
+          pwd
         
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          path:  subdir
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ls -l
+        run: |
+          pwd
+          ls -l
 
 
