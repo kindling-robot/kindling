@@ -23,23 +23,17 @@ jobs:
         with:
           repository: Kindling-project/agent-libs.git
           ref: kindling-dev
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          ls -l
-          pwd
-          ls -l $HOME/.config
-          ls -l $HOME/.gitconfig
+      - name: version
+        run: echo "version=alphatest" >> $GITHUB_ENV
         
-      - uses: actions/checkout@v3
-        with:
-          path:  subdir
-
+      - name: getversion1
+        if: ${{contains(GITHUB_REF_NAME,"release-")}}
+        run: name=`echo ${{GITHUB_REF_NAME}}`; echo version=${name#*release-} >> $GITHUB_ENV
+      
+        
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          pwd
+          echo "${{env.version}}"
           ls -l
-
-
+    
