@@ -20,9 +20,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with:
-          repository: Kindling-project/agent-libs.git
-          ref: kindling-dev
       - name: version
         run: echo "version=alphatest" >> $GITHUB_ENV
         
@@ -34,6 +31,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
+          cd probe
           echo "${{env.version}}"
           ls -l
+          sed -i '' -e 's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
     
