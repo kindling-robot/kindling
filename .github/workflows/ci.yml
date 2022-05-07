@@ -57,13 +57,15 @@ jobs:
           tar -cvzf kindling-falcolib-probe.tar.gz kindling-falcolib-probe/
           cp kindling-falcolib-probe.tar.gz subdir/probe/deploy/
           ls -l subdir/probe/deploy
-      - name: test
-        run: |
           cd subdir/probe/
           echo ${{ github.event.release.name }}
           sed -e 's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
-          pwd
-          ./scripts/run_docker.sh
-          bazel build -s --config=clang src/probe:kindling_probe
-          bazel build -s --config=clang src/probe:push_image_localdriver
-          ./bazel-bin/src/probe/push_image_localdriver 
+          
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: kindlingproject/kindling-compiler
+          options: -v /var/run/docker.sock:/var/run/docker.sock  -v ../:/kindling 
+          run: |
+            bazel build -s --config=clang src/probe:kindling_probe
+            bazel build -s --config=clang src/probe:push_image_localdriver
+            ./bazel-bin/src/probe/push_image_localdriver
