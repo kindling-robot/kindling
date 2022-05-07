@@ -65,7 +65,9 @@ jobs:
           cp kindling-falcolib-probe.tar.gz subdir/probe/deploy/
           ls -l subdir/probe/deploy
           cd subdir/probe/
-          sed -i '' -e 's/tag = "latest"/tag = ${{env.version}}/g' src/probe/BUILD.bazel
+          ls -l src/probe/
+          cat src/probe/BUILD.bazel
+          sed -i '' -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel
           
       - uses: addnab/docker-run-action@v3
         with:
