@@ -30,7 +30,6 @@ jobs:
           ls -l
           pwd
           ls -l $HOME/.config
-          ls -l $HOME/.ssh
           ls -l $HOME/.gitconfig
         
       - uses: actions/checkout@v3
