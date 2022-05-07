@@ -57,8 +57,9 @@ jobs:
       - name: test
         run: |
           cd subdir/probe/
+          sed -i ".bak"  's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
           pwd
           ./scripts/run_docker_bpf_daemon.sh
-          sed -i ".bak"  's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
+          bazel build -s --config=clang src/probe:kindling_probe
           bazel build -s --config=clang src/probe:push_image_localdriver
           ./bazel-bin/src/probe/push_image_localdriver 
