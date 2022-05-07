@@ -27,7 +27,7 @@ jobs:
         run: echo "version=alphatest" >> $GITHUB_ENV
         
       - name: getversion1
-        if: ${{contains(github.ref.name,"release-")}}
+        if: ${{startsWith(github.ref.name,'release-')}}
         run: name=`echo ${{github.ref.name}}`; echo version=${name#*release-} >> $GITHUB_ENV
       
         
