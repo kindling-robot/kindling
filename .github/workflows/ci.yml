@@ -64,8 +64,10 @@ jobs:
       - uses: addnab/docker-run-action@v3
         with:
           image: kindlingproject/kindling-compiler
-          options: -v /var/run/docker.sock:/var/run/docker.sock  -v ../:/kindling 
+          options: -v /var/run/docker.sock:/var/run/docker.sock  -v ../:/kindling -w /kindling/probe
           run: |
+            pwd
+            ls -l
             bazel build -s --config=clang src/probe:kindling_probe
             bazel build -s --config=clang src/probe:push_image_localdriver
             ./bazel-bin/src/probe/push_image_localdriver
