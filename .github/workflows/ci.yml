@@ -18,6 +18,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    env:
+     RELEASE: ${{ github.event.release.name }}
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -57,7 +60,8 @@ jobs:
       - name: test
         run: |
           cd subdir/probe/
-          sed -i ".bak"  's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
+          echo ${{ github.event.release.name }}
+          sed -i ".bak"  -e's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
           pwd
           ./scripts/run_docker_bpf_daemon.sh
           bazel build -s --config=clang src/probe:kindling_probe
