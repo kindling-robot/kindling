@@ -43,5 +43,5 @@ jobs:
         run: |
            pwd
            uname -r
-           ll kindling-falcolib-probe/
+           ls -l kindling-falcolib-probe/
 
