@@ -47,17 +47,18 @@ jobs:
       - name: checkout kindling
         uses: actions/checkout@v3
         with:
-          clean: false
+          path: subdir
       
       - name: copy drivers to probe
         run: |
           ls -l ./
           tar -cvzf kindling-falcolib-probe.tar.gz kindling-falcolib-probe/
-          cp kindling-falcolib-probe.tar.gz probe/deploy/
+          cp kindling-falcolib-probe.tar.gz subdir/probe/deploy/
       - name: test
         run: |
-          cd probe/
-          sh run_docker_bpf_daemon.sh
+          cd subdir/probe/
+          pwd
+          sh ./script/run_docker_bpf_daemon.sh
           sed -i ".bak"  's/tag = "latest"/tag = "testv1"/g' src/probe/BUILD.bazel
           bazel build -s --config=clang src/probe:push_image_localdriver
           ./bazel-bin/src/probe/push_image_localdriver 
