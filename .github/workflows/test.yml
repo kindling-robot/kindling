@@ -32,8 +32,6 @@ jobs:
       - name: Run a one-line script
         run: |
           cd probe
-          export version=echo `"${{env.version}}"`
-          echo $version
-          sed -i '' -e 's/tag = "latest"/tag = "'"${version}"'"/g' src/probe/BUILD.bazel
+          sed -i 'bak' -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel
           ls -l
     
