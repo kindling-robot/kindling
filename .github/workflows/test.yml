@@ -32,6 +32,6 @@ jobs:
       - name: Run a one-line script
         run: |
           cd probe
-          sed -i 'bak' -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel
+          sed -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel 
           ls -l
     
