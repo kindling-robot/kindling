@@ -74,7 +74,7 @@ jobs:
           image: kindlingproject/kindling-compiler
           options: -v /var/run/docker.sock:/var/run/docker.sock  -v /home/runner/work/kindling/kindling/subdir:/kindling -w /kindling/probe
           run: |
-            docker login -u kindlingproject -p Harmonycloud@123
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
             bazel build -s --config=clang src/probe:kindling_probe
             bazel build -s --config=clang src/probe:push_image_localdriver
             ./bazel-bin/src/probe/push_image_localdriver
