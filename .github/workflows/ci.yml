@@ -65,14 +65,17 @@ jobs:
           cp kindling-falcolib-probe.tar.gz subdir/probe/deploy/
           ls -l subdir/probe/deploy
           cd subdir/probe/
-          ls -l src/probe/
           cat src/probe/BUILD.bazel
-          sed -i '' -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel
+          sed -i[bak] -e 's/tag = "latest"/tag = "${{env.version}}"/g' src/probe/BUILD.bazel 
+          cat src/probe/BUILD.bazel
           
       - uses: addnab/docker-run-action@v3
         with:
           image: kindlingproject/kindling-compiler
           options: -v /var/run/docker.sock:/var/run/docker.sock  -v /home/runner/work/kindling/kindling/subdir:/kindling -w /kindling/probe
           run: |
-            cat src/probe/BUILD.bazel
+            docker login -u kindlingproject -p Harmonycloud@123
+            bazel build -s --config=clang src/probe:kindling_probe
+            bazel build -s --config=clang src/probe:push_image_localdriver
+            ./bazel-bin/src/probe/push_image_localdriver
             
